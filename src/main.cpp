@@ -32,9 +32,15 @@ int main(int argc, char* argv[])
     }
     
 
-    EMatrix(x,y,x.size(),3,coefficient);
-    printf("Quadratic Fitting: y = %lf + %lf x + %lf x^2 \n",coefficient[0],coefficient[1],coefficient[2]);
-	double coefA;
+    ///@todo silver  enum and if else
+
+    // EMatrix(x,y,x.size(),3,coefficient);
+    // printf("Quadratic Fitting: y = %lf + %lf x + %lf x^2 \n",coefficient[0],coefficient[1],coefficient[2]);
+    
+    EMatrix(x,y,x.size(),2,coefficient);
+    printf("Linear Fitting: y = %lf + %lf x\n",coefficient[0],coefficient[1]);
+
+    double coefA;
 	CalcCoefA(x,y,x.size(),coefA);
     printf("Linear Fitting: y = %3.10le x \n",coefA);
 
@@ -98,27 +104,7 @@ double RelateMutiXY(vector<double> x, vector<double> y, int dataSize, int ex)
 //计算方程组的增广矩阵
 void EMatrix(vector<double> x, vector<double> y, int dataSize, int ex, double coefficient[])
 {
-    // for (int i=1; i<=ex; i++)
-    // {
-    //     for (int j=1; j<=ex; j++)
-    //     {
-    //         Em[i][j]=RelatePow(x,dataSize,i+j-2);
-    //     }
-    //     Em[i][ex+1]=RelateMutiXY(x,y,dataSize,i-1);
-
-
-    // }
-   
-    // Em[1][1]=dataSize;
-// //	if(ex<3){
-// //	    for(int i=1;i<=ex;i++){
-// //		    for(int j=1;j<=ex;j++){
-// //			if(i!=2&&j!=2)Em[i][j]=0;}
-// //		}
-// //
-// //	} 
-
-
+ 
     for (int i=0; i<ex; i++)
     {
         for (int j=0; j<ex; j++)
@@ -129,13 +115,13 @@ void EMatrix(vector<double> x, vector<double> y, int dataSize, int ex, double co
     }
    
     Em[0][0]=dataSize;
-// 	if(ex<3){
-// 	    for(int i=1;i<=ex;i++){
-// 		    for(int j=1;j<=ex;j++){
-// 			if(i!=2&&j!=2)Em[i][j]=0;}
-// 		}
+	// if(ex<3){
+	//     for(int i=0;i<ex;i++){
+	// 	    for(int j=0;j<ex;j++){
+	// 		if(i!=1&&j!=1)Em[i][j]=0;}
+	// 	}
 
-// 	} 
+	// } 
 
 for (int i=0;i<ex;i++){
     for (int j=0;j<=ex;j++){
@@ -175,10 +161,10 @@ void CalEquation(int exp, double coefficient[])
     }
 }
 //供CalEquation函数调用
-double F(double c[],int l,int m)
+double F(double c[],int l,int ep)
 {
     double sum=0;
-    for(int i=l;i<=m;i++)
+    for(int i=l;i<=ep;i++)
         sum+=Em[l-1][i]*c[i];
         printf("%lf\n",sum);
     return sum;
